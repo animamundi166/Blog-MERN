@@ -23,7 +23,7 @@ export const register = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user._id,
+        id: newUser._id,
       },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
@@ -38,7 +38,8 @@ export const register = async (req, res) => {
     })
 
   } catch (error) {
-    res.json('Error registering user')
+    console.log(error);
+    res.json({ message: 'Error registering user' });
   }
 }
 
@@ -73,11 +74,9 @@ export const login = async (req, res) => {
       token,
       user,
       message: 'You are entered',
-
     })
-
   } catch (error) {
-    res.json('Auth error')
+    res.json({ message: 'Auth error' });
   }
 }
 
