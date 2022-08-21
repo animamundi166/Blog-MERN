@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkIsAuth, registerUser } from '../redux/auth/authSlice';
+import { checkIsAuth, loginUser } from '../redux/auth/authSlice';
 import { toast } from 'react-toastify';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const { status } = useSelector((state) => state.auth);
   const isAuth = useSelector(checkIsAuth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const Login = () => {
 
   const handleSubmit = () => {
     try {
-      dispatch(registerUser({ username, password }));
+      dispatch(loginUser({ username, password }));
     } catch (error) {
       console.log(error);
     }

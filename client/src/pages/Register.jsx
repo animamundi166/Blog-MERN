@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,6 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const { status } = useSelector((state) => state.auth);
   const isAuth = useSelector(checkIsAuth);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,8 +21,8 @@ const Register = () => {
   const handleSubmit = () => {
     try {
       dispatch(registerUser({ username, password }));
-      setPassword('');
       setUsername('');
+      setPassword('');
     } catch (error) {
       console.log(error);
     }
