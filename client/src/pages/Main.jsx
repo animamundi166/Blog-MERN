@@ -6,18 +6,16 @@ import { getAllPosts } from '../redux/post/postSlice';
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const { posts, popularPosts } = useSelector((state) => state.post);
+  const { posts, popularPosts, loading } = useSelector((state) => state.post);
 
   useEffect(() => {
     dispatch(getAllPosts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!posts.length) {
+  if (loading) {
     return (
-      <div className='text-xl text-center text-white py-10'>
-        Постов не существует.
-      </div>
+      <div className='text-xl text-center text-white py-10'>Загрузка...</div>
     );
   }
 
@@ -29,6 +27,7 @@ const MainPage = () => {
             <PostItem key={idx} post={post} />
           ))}
         </div>
+
         <div className='basis-1/5'>
           <div className='text-xs uppercase text-white'>Популярное:</div>
 

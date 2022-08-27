@@ -34,6 +34,15 @@ export const removePost = createAsyncThunk('post/removePost', async (id) => {
   }
 })
 
+export const updatePost = createAsyncThunk('post/updatePost', async (updatePost) => {
+  try {
+    const { data } = await axios.delete(`/posts/${updatePost.id}`, updatePost);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 export const postSlice = createSlice({
   name: 'post',
   initialState,
@@ -71,6 +80,18 @@ export const postSlice = createSlice({
       state.posts = state.posts.filter(post => post._id !== action.payload._id);
     },
     [removePost.rejected]: (state) => {
+      state.loading = false;
+    },
+    // Update post
+    [updatePost.pending]: (state) => {
+      state.loading = true;
+    },
+    [updatePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      const index = state.posts.findIndex(post => post._id === action.payload._id);
+      state.post[index] = action.payload;
+    },
+    [updatePost.rejected]: (state) => {
       state.loading = false;
     },
   }
