@@ -15,15 +15,16 @@ const Post = () => {
 
   const { user } = useSelector((state) => state.auth);
   const { comments } = useSelector((state) => state.comment);
+
   const navigate = useNavigate();
-  const params = useParams();
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const removePostHandler = () => {
     try {
-      dispatch(removePost(params.id));
+      dispatch(removePost(id));
       toast('Пост был удален');
-      navigate('/posts');
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -31,7 +32,7 @@ const Post = () => {
 
   const handleSubmit = () => {
     try {
-      const postId = params.id;
+      const postId = id;
       dispatch(createComment({ postId, comment }));
       setComment('');
     } catch (error) {
@@ -39,18 +40,18 @@ const Post = () => {
     }
   };
 
+  const fetchPost = useCallback(async () => {
+    const { data } = await axios.get(`/posts/${id}`);
+    setPost(data);
+  }, [id]);
+
   const fetchComments = useCallback(async () => {
     try {
-      dispatch(getPostComments(params.id));
+      dispatch(getPostComments(id));
     } catch (error) {
       console.log(error);
     }
-  }, [params.id, dispatch]);
-
-  const fetchPost = useCallback(async () => {
-    const { data } = await axios.get(`/posts/${params.id}`);
-    setPost(data);
-  }, [params.id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     fetchPost();
@@ -58,28 +59,20 @@ const Post = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!post) {
-    return (
-      <div className='text-xl text-center text-white py-10'>Загрузка...</div>
-    );
-  }
-
   return (
     <>
       <button className='flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm py-2 px-4'>
-        <Link className='flex' to={'/'}>
-          Назад
-        </Link>
+        <Link to={'/'}>Назад</Link>
       </button>
 
       <div className='flex gap-10 py-8'>
         <div className='w-2/3'>
-          <PostItem key={post._id} post={post} />
+          <PostItem post={post} />
 
-          {user?._id === post.author && (
+          {user?._id === post?.author && (
             <div className='flex gap-3 mt-4'>
               <button className='flex items-center justify-center gap-2 text-white opacity-50'>
-                <Link to={`/${params.id}/edit`}>
+                <Link to={`/${id}/edit`}>
                   <AiTwotoneEdit />
                 </Link>
               </button>
@@ -112,7 +105,7 @@ const Post = () => {
           </form>
 
           {comments?.map((cmt) => (
-            <CommentItem key={cmt._id} cmt={cmt} />
+            <CommentItem key={cmt._id} cmt={cmt} user={user} />
           ))}
         </div>
       </div>

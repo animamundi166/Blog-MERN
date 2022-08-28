@@ -1,5 +1,13 @@
-export const CommentItem = ({ cmt }) => {
-  const avatar = cmt.comment.trim().toUpperCase().split('').slice(0, 2);
+import { useSelector } from 'react-redux';
+import { checkIsAuth } from '../redux/auth/authSlice';
+
+export const CommentItem = ({ cmt, user }) => {
+  const isAuth = useSelector(checkIsAuth);
+
+  const avatar = isAuth
+    ? user.username.trim().toUpperCase().split('').slice(0, 2)
+    : '?';
+
   return (
     <div className='flex items-center gap-3'>
       <div className='flex items-center justify-center shrink-0 rounded-full w-10 h-10 bg-blue-300 text-sm'>

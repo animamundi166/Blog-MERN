@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { PostItem } from '../components/PostItem';
 
 import axios from '../utils/axios';
@@ -21,8 +22,10 @@ const MyPosts = () => {
 
   return (
     <div className='w-1/2 mx-auto py-10 flex flex-col gap-10'>
-      {posts?.map((post, idx) => (
-        <PostItem post={post} key={idx} />
+      {posts?.map((post) => (
+        <Link to={`/${post._id}`} key={post._id}>
+          <PostItem post={post} />
+        </Link>
       ))}
     </div>
   );

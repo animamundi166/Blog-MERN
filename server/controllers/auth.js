@@ -34,12 +34,12 @@ export const register = async (req, res) => {
     res.json({
       token,
       newUser,
-      message: 'Registred successful',
+      message: 'Регистрация прошла успешно',
     })
 
   } catch (error) {
     console.log(error);
-    res.json({ message: 'Error registering user' });
+    res.json({ message: 'Ошибка при регистрации' });
   }
 }
 
@@ -50,7 +50,7 @@ export const login = async (req, res) => {
 
     if (!user) {
       return res.json({
-        message: 'User is not exist',
+        message: 'Пользователь не найден',
       })
     }
 
@@ -58,7 +58,7 @@ export const login = async (req, res) => {
 
     if (!isPasswordCorrect) {
       return res.json({
-        message: 'Username or password are incorrect',
+        message: 'Логин или пароль неверны',
       })
     }
 
@@ -73,10 +73,10 @@ export const login = async (req, res) => {
     res.json({
       token,
       user,
-      message: 'You are entered',
+      message: 'Вы вошли в систему',
     })
   } catch (error) {
-    res.json({ message: 'Auth error' });
+    res.json({ message: 'Ошибка при логине' });
   }
 }
 
@@ -86,7 +86,7 @@ export const getMe = async (req, res) => {
 
     if (!user) {
       return res.json({
-        message: 'User is not exist',
+        message: 'Пользователь не существует',
       })
     }
 

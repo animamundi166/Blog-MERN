@@ -4,9 +4,11 @@ import { toast } from 'react-toastify';
 import { checkIsAuth, logout } from '../redux/auth/authSlice';
 
 const Navbar = () => {
-  const isAuth = useSelector(checkIsAuth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isAuth = useSelector(checkIsAuth);
+  const { user } = useSelector((state) => state.auth);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -54,11 +56,23 @@ const Navbar = () => {
         </ul>
       )}
 
-      <div className='flex justify-center items-center bg-gray-600 text-xs text-white rounded-sm px-4 py-2'>
+      <div className='flex justify-between gap-4'>
         {isAuth ? (
-          <button onClick={logoutHandler}>Выйти</button>
+          <>
+            <div className='flex items-center justify-center rounded-full w-8 h-8 bg-gray-400 text-sm'>
+              {user.username.trim().toUpperCase().split('').slice(0, 2)}
+            </div>
+            <button
+              className='bg-gray-600 text-xs text-white rounded-sm px-4 py-2'
+              onClick={logoutHandler}
+            >
+              Выйти
+            </button>
+          </>
         ) : (
-          <Link to={'/login'}> Войти </Link>
+          <button className='bg-gray-600 text-xs text-white rounded-sm px-4 py-2'>
+            <Link to={'/login'}> Войти </Link>
+          </button>
         )}
       </div>
     </div>

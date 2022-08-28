@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { PopularPosts } from '../components/PopularPosts';
 import { PostItem } from '../components/PostItem';
 import { getAllPosts } from '../redux/post/postSlice';
+import TextInfo from '../components/TextInfo';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -15,9 +16,11 @@ const MainPage = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className='text-xl text-center text-white py-10'>Загрузка...</div>
-    );
+    return <TextInfo text='Загрузка' />;
+  }
+
+  if (posts.length === 0) {
+    return <TextInfo text='Нет постов' />;
   }
 
   return (
@@ -26,7 +29,7 @@ const MainPage = () => {
         <div className='flex flex-col gap-20 basis-4/5'>
           {posts?.map((post) => (
             <Link to={`/${post._id}`} key={post._id}>
-              <PostItem post={post} />
+              <PostItem post={post} lineclamp='line-clamp-4' />
             </Link>
           ))}
         </div>

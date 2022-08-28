@@ -21,6 +21,6 @@ export const createComment = async (req, res) => {
 
     res.json(newComment);
   } catch (error) {
-    res.json({ message: 'Что-то пошло не так.' });
+    res.json({ message: 'Что-то пошло не так' });
   }
 }

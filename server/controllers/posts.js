@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 export const createPost = async (req, res) => {
   try {
     const { title, text } = req.body;
-    const user = User.findById(req.userId);
+    const user = await User.findById(req.userId);
 
     if (req.files) {
       let fileName = Date.now().toString() + req.files.image.name;
@@ -18,7 +18,7 @@ export const createPost = async (req, res) => {
         username: user.username,
         text,
         title,
-        imgUrl: fileName,
+        imgUrl: fileName || '',
         author: req.userId,
       })
 
@@ -31,7 +31,7 @@ export const createPost = async (req, res) => {
     }
 
   } catch (error) {
-    res.json({ message: 'Something went wrong' })
+    res.json({ message: 'Что-то пошло не так' })
   }
 }
 
@@ -41,13 +41,13 @@ export const getAll = async (req, res) => {
     const popularPosts = await Post.find().limit(5).sort('-views');
 
     if (!posts) {
-      return res.json({ message: 'Posts are absence' })
+      return res.json({ message: 'Посты не существуют' })
     }
 
     res.json({ posts, popularPosts });
 
   } catch (error) {
-    res.json({ message: 'Something went wrong' })
+    res.json({ message: 'Что-то пошло не так' })
   }
 }
 
@@ -59,7 +59,7 @@ export const getById = async (req, res) => {
     res.json(post);
 
   } catch (error) {
-    res.json({ message: 'Something went wrong' })
+    res.json({ message: 'Что-то пошло не так' })
   }
 }
 
@@ -72,21 +72,21 @@ export const getMyPosts = async (req, res) => {
     res.json(list);
 
   } catch (error) {
-    res.json({ message: 'Something went wrong' })
+    res.json({ message: 'Что-то пошло не так' })
   }
 }
 
 export const removePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndDelete(req.params.id);
-    if (!post) return res.json({ message: 'The post is absence' });
+    if (!post) return res.json({ message: 'Пост отсутствует' });
     await User.findByIdAndUpdate(req.userId, {
       $pull: { posts: req.params.id },
     })
-    res.json({ message: 'The post was removed' });
+    res.json({ message: 'Пост был удален' });
 
   } catch (error) {
-    res.json({ message: 'Something went wrong' })
+    res.json({ message: 'Что-то пошло не так' })
   }
 }
 
@@ -110,7 +110,7 @@ export const updatePost = async (req, res) => {
     res.json(post);
 
   } catch (error) {
-    res.json({ message: 'Something went wrong' })
+    res.json({ message: 'Что-то пошло не так' })
   }
 }
 
@@ -124,6 +124,6 @@ export const getPostComments = async (req, res) => {
     )
     res.json(list);
   } catch (error) {
-    res.json({ message: 'Что-то пошло не так.' });
+    res.json({ message: 'Что-то пошло не так' });
   }
 }

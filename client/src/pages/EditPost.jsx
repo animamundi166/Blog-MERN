@@ -30,7 +30,7 @@ const EditPost = () => {
       updatedPost.append('id', id);
       updatedPost.append('image', newImage);
       dispatch(updatePost(updatedPost));
-      navigate('/posts');
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
