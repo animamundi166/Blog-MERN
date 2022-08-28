@@ -3,7 +3,7 @@ import { PostItem } from '../components/PostItem';
 
 import axios from '../utils/axios';
 
-const Posts = () => {
+const MyPosts = () => {
   const [posts, setPosts] = useState([]);
 
   const fetchMyPosts = async () => {
@@ -19,8 +19,6 @@ const Posts = () => {
     fetchMyPosts();
   }, []);
 
-  console.log(posts);
-
   return (
     <div className='w-1/2 mx-auto py-10 flex flex-col gap-10'>
       {posts?.map((post, idx) => (
@@ -30,4 +28,4 @@ const Posts = () => {
   );
 };
 
-export default Posts;
+export default MyPosts;

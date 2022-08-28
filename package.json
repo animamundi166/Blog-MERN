@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.8.4",
-    "@tailwindcss/line-clamp": "^0.4.0",
-    "react-toastify": "^9.0.8"
-  }
-}

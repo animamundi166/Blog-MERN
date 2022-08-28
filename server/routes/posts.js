@@ -9,7 +9,7 @@ router.get('/:id', getById);
 router.get('/comments/:id', getPostComments);
 router.get('/user/me', checkAuth, getMyPosts);
 router.post('/', checkAuth, createPost);
-router.delete('/:id', checkAuth, updatePost);
-router.put('/:id', checkAuth, removePost);
+router.delete('/:id', checkAuth, removePost);
+router.put('/:id', checkAuth, updatePost);
 
 export default router;

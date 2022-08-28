@@ -5,7 +5,7 @@ import Register from './pages/Register';
 import AddPost from './pages/AddPost';
 import EditPost from './pages/EditPost';
 import Main from './pages/Main';
-import Posts from './pages/Posts';
+import MyPosts from './pages/MyPosts';
 import Post from './pages/Post';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,7 +24,7 @@ const App = () => {
     <Layout>
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route path='posts' element={<Posts />} />
+        <Route path='myposts' element={<MyPosts />} />
         <Route path=':id' element={<Post />} />
         <Route path=':id/edit' element={<EditPost />} />
         <Route path='new' element={<AddPost />} />

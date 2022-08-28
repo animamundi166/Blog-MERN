@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { PopularPosts } from '../components/PopularPosts';
 import { PostItem } from '../components/PostItem';
 import { getAllPosts } from '../redux/post/postSlice';
@@ -22,17 +23,19 @@ const MainPage = () => {
   return (
     <div className='max-w-[900px] mx-auto py-10'>
       <div className='flex justify-between gap-8'>
-        <div className='flex flex-col gap-10 basis-4/5'>
-          {posts?.map((post, idx) => (
-            <PostItem key={idx} post={post} />
+        <div className='flex flex-col gap-20 basis-4/5'>
+          {posts?.map((post) => (
+            <Link to={`/${post._id}`} key={post._id}>
+              <PostItem post={post} />
+            </Link>
           ))}
         </div>
 
         <div className='basis-1/5'>
           <div className='text-xs uppercase text-white'>Популярное:</div>
 
-          {popularPosts?.map((post, idx) => (
-            <PopularPosts key={idx} post={post} />
+          {popularPosts?.map((post) => (
+            <PopularPosts key={post._id} post={post} />
           ))}
         </div>
       </div>
